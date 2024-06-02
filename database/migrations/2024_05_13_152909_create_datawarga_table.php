@@ -26,7 +26,6 @@ class CreateDatawargaTable extends Migration
             $table->string('kecamatan');
             $table->string('kab_kota');
             $table->string('provinsi');
-            $table->string('negara');
         });
     }
 

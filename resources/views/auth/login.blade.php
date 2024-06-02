@@ -57,7 +57,7 @@
             </div> 
 
             <div class="col-md-6 p-0 rounded-end" style="background: #103cbe;">
-                <img src="{{ asset('images/right_box_image.jpeg') }}" class="right-box-image" alt="Right Box Image"> 
+                <img src="{{ asset('images/rightbox2.jpg') }}" class="right-box-image" alt="Right Box Image"> 
             </div> 
 
         </div>

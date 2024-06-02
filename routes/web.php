@@ -9,6 +9,8 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IndoRegionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,34 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('bokoin.content.landingPage');
-})->name('landingPage');
-
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::get('/dashboard', function () {
-    return view('content.dashboard');
-})->name('dashboard')->middleware('auth');  
-
-Route::get('/dashboard-warga-add', function () {
-    return view('content.dashboard-warga-add');
-})->name('dashboard-warga-add')->middleware('auth');
-
-Route::get('/dashboard-kartu-keluarga-add', function () {
-    return view('content.dashboard-kartu-keluarga-add');
-})->name('dashboard-kartu-keluarga-add')->middleware('auth');
-
-Route::get('/dashboard-mutasi-add', function () {
-    return view('content.dashboard-mutasi-add');
-})->name('dashboard-mutasi-add')->middleware('auth');
-
-Route::get('/dashboard-informasi-add', function () {
-    return view('content.dashboard-informasi-add');
-})->name('dashboard-informasi-add')->middleware('auth'); 
-
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.action');
@@ -62,7 +36,10 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.a
 
 Route::get('/', [LandingPageController::class, 'index']);
 
+// Route::get('/dashboard', [DashboardController::class, 'showNav'])->name('dashboard.showNav');
 
+// Route untuk menampilkan chart
+Route::get('/dashboard', [DashboardController::class, 'chart'])->name('dashboard.chart')->middleware('auth');
 
 // Dashboard Warga
 Route::get('/dashboard-warga', [DataWargaController::class, 'index'])->middleware('auth');
@@ -73,6 +50,7 @@ Route::post('/dashboard-warga-add', [DataWargaController::class, 'store'])->midd
 Route::get('/dashboard-warga-edit/edit/{id}', [DataWargaController::class, 'edit'])->middleware('auth');
 Route::put('/dashboard-warga-edit/{id}', [DataWargaController::class, 'update'])->middleware('auth');
 Route::delete('/dashboard-warga-delete/{id}', [DataWargaController::class, 'destroy'])->middleware('auth');
+Route::post('/dashboard-warga/import',[DataWargaController::class, 'import'])->middleware('auth')->name('import');
 
 // Dashboard Kartu Keluarga
 Route::GET('/dashboard-data-keluarga',[dataKeluargaController::class,'index'])->middleware('auth');
@@ -80,7 +58,7 @@ Route::GET('/dashboard-data-keluarga-add',[dataKeluargaController::class,'create
 Route::POST('/dashboard-data-keluarga-add',[dataKeluargaController::class,'store'])->middleware('auth');
 Route::GET('/dashboard-data-keluarga-edit/edit/{id}',[dataKeluargaController::class,'edit'])->middleware('auth');
 Route::PUT('/dashboard-data-keluarga-edit/{id}',[dataKeluargaController::class,'update'])->middleware('auth');
-Route::delete('dashboard-delete-produk/{id}', [dataKeluargaController::class,'destroy'])->middleware('auth');
+Route::delete('/dashboard-data-keluarga-delete/{id}', [dataKeluargaController::class,'destroy'])->middleware('auth');
 
 // Dashboard Mutasi
 Route::get('/dashboard-mutasi', [MutasiController::class, 'index'])->middleware('auth');
@@ -116,7 +94,21 @@ Route::DELETE('/dashboard-data-rt-delete/{id}',[DataRTController::class,'destroy
 //DATA ADMIN
 Route::get('/dashboard-admin', [AdminController::class, 'index'])->middleware('auth');
 Route::post('/dashboard-admin', [AdminController::class, 'store'])->middleware('auth');
-Route::get('/dashboard-admin-add', [AdminController::class, 'create'])->middleware('auth');
-Route::post('/dashboard-admin-add', [AdminController::class, 'store'])->middleware('auth');
-Route::get('/dashboard-admin-edit/edit/{id}', [AdminController::class, 'edit'])->middleware('auth');
-Route::put('/dashboard-admin-edit/{id}', [AdminController::class, 'update'])->middleware('auth');
+// Route::get('/dashboard-admin-add', [AdminController::class, 'create'])->middleware('auth');
+// Route::post('/dashboard-admin-add', [AdminController::class, 'store'])->middleware('auth');
+Route::get('/dashboard/{id}', [AdminController::class, 'edit'])->middleware('auth');
+Route::put('/dashboard/{id}', [AdminController::class, 'update'])->middleware('auth');
+
+//Data Region
+Route::get('/dashboard-warga-add', [IndoRegionController::class, 'formWarga'])->name('form')->middleware('auth');
+Route::get('/dashboard-data-keluarga-add', [IndoRegionController::class, 'formKeluarga'])->name('form')->middleware('auth');
+Route::get('/dashboard-mutasi-add', [IndoRegionController::class, 'formMutasi'])->name('form')->middleware('auth');
+
+
+Route::post('/getKabupaten', [IndoRegionController::class, 'getKabupaten'])->name('getKabupaten')->middleware('auth');
+Route::post('/getKecamatan', [IndoRegionController::class, 'getKecamatan'])->name('getKecamatan')->middleware('auth');
+Route::post('/getDesa', [IndoRegionController::class, 'getDesa'])->name('getDesa')->middleware('auth');
+
+Route::get('/getKabupaten', [IndoRegionController::class, 'getKabupaten'])->name('getKabupaten')->middleware('auth');
+Route::get('/getKecamatan', [IndoRegionController::class, 'getKecamatan'])->name('getKecamatan')->middleware('auth');
+Route::get('/getDesa', [IndoRegionController::class, 'getDesa'])->name('getDesa')->middleware('auth');

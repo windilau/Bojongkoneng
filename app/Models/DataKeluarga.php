@@ -9,5 +9,5 @@ class dataKeluarga extends Model
 {
     use HasFactory;
     protected $table= "DataKeluarga";
-    protected $fillable = ['no_KK','Id_KK','Alamat','desa_lurah','kecamatan','kab_kota','prov','negara'];
+    protected $fillable = ['no_kk','nik_kepala_keluarga','alamat','desa_kelurahan','kecamatan','kab_kota','provinsi'];
 }

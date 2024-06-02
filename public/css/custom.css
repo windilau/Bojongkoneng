@@ -42,3 +42,81 @@
 .custom-icon i {
     color: black; /* Mengubah warna ikon menjadi hitam */
 }
+
+.informasi-section{
+    padding-top: 7em;
+}
+
+.data-section{
+    padding-top: 7em;
+}
+
+.carousel-custom{
+    height: 100vh;
+}
+
+/* Landing Page */
+
+.carousel-item img {
+    max-height: 90vh; 
+    object-fit: cover;
+}
+.shadow-only {
+    box-shadow: 0px 10px 5px -5px rgba(0, 0, 0, 0.2);
+}
+.border-bottom {
+    border-bottom: 2px solid #000; 
+}
+
+/* Sidebar */
+#sidebarMenu {
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    color: yellow;
+    text-decoration: none;
+}
+
+.nav-link .fa-lg {
+    margin-right: 10px;
+}
+
+.nav-link .nav-text {
+    display: inline-block;
+    color: black;
+}
+
+
+.custom-icon .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.custom-icon .nav-link .fa-lg {
+    margin-right: 10px;
+}
+
+.nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+
+.nav-item .nav-link:hover {
+    background-color: #f1f1f1;
+}
+
+.nav-item .nav-link .nav-text {
+    margin-left: 10px;
+}

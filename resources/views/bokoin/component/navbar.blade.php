@@ -34,3 +34,9 @@
         </div>
     </div>
 </nav>
+
+<style>
+    .nav-item .nav-link:hover {
+        background-color: #CBB431;
+    }
+</style>

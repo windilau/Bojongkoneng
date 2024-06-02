@@ -1,228 +1,158 @@
 @extends('layout.layout')
-
+@include('component.navbar')
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            @include('component.sidebar')
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
+
+<div class="container-fluid">
+    <div class="row">
+        @include('component.sidebar')
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-0 border-bottom">
+
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                </div>
+            </div>
+
+            <div class="container px-4 mt-4">
+                <div class="row gx-4 gx-lg-5 mb-4">
+                    <div class="col-md-4 mb-2">
+                        <div class="card h-100 d-flex justify-content-center align-items-center shadow-only rounded">
+                            <div class="card-body text-center">
+                                <p class="display-4"><i class="fa-solid fa-users"></i></p>
+                                <p class="h5">Jumlah Warga</p>
+                                <p>{{$countwarga}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card h-100 d-flex justify-content-center align-items-center shadow-only rounded">
+                            <div class="card-body text-center">
+                                <p class="display-4"><i class="fa-solid fa-people-roof"></i></p>
+                                <p class="h5">Jumlah Kepala Keluarga</p>
+                                <p>{{$countkepalakeluarga}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card h-100 d-flex justify-content-center align-items-center shadow-only rounded">
+                            <div class="card-body text-center">
+                                <p class="display-4"><i class="fa-solid fa-users"></i></p>
+                                <p class="h5">Jumlah Data Sementara</p>
+                                <p>{{$countmutasi}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card h-100 d-flex justify-content-center align-items-center shadow-only rounded">
+                            <div class="card-body text-center">
+                                <p class="display-4"><i class="fa-solid fa-users"></i></p>
+                                <p class="h5">Jumlah Data Informasi</p>
+                                <p>{{$countinfo}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card h-100 d-flex justify-content-center align-items-center shadow-only rounded">
+                            <div class="card-body text-center">
+                                <p class="display-4"><i class="fa-solid fa-home"></i></p>
+                                <p class="h5">Jumlah Kartu Keluarga</p>
+                                <p>{{$countkartukeluarga}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="search-container">
-                    <input class="form-control form-control-dark w-100" type="text" placeholder="Search"
-                        aria-label="Search"> <!-- Input search -->
+            </div>
+
+            <div class="row g-2 align-items-center">
+                <div class="container col-md-6 bg-white w-50 py-2">
+                    <h5 class="fw-bold text-center mb-2">Grafik Data Warga - Jenis Kelamin</h3>
+                        <canvas id="chartDataWargaJenisKelaminPie" width="100" height="100"></canvas>
                 </div>
-                <hr>
-                <div class="row g-2 align-items-center">
-                    <div class="container col-md-6 bg-white w-50 py-2">
-                        <h5 class="fw-bold text-center mb-2">Grafik Jumlah Data Warga</h3>
-                            <canvas id="chartDataWargaPie" width="800" height="450"></canvas>
-                    </div>
-                    <div class="container col-md-6 bg-white w-50 py-2">
-                        <h5 class="fw-bold text-center mb-2">Grafik Jumlah Data Warga</h3>
-                            <canvas id="chartDataWargaBar" width="800" height="450"></canvas>
-                    </div>
+                <div class="container col-md-6 bg-white w-50 py-2">
+                    <h5 class="fw-bold text-center mb-2">Grafik Data Warga - Kelompok Usia</h3>
+                        <canvas id="chartDataWargaKelompokUsia" width="400" height="200"></canvas>
                 </div>
-            </main>
-        </div>
+            </div>
+
+        </main>
     </div>
+</div>
 
-    <script>
-        // Setup for Pie Chart
-        const dataPie = {
-            labels: ["Kepala Keluarga", "Jumlah Warga", "Jumlah Warga Sementara", "Perempuan", "Laki-Laki"],
-            datasets: [{
-                label: 'Jumlah',
-                data: [125, 120, 10, 50, 60],
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#7FFF00"],
-                hoverOffset: 4
-            }]
-        };
+<script>
+    // Setup for Pie Chart Jenis Kelamin
+    var perempuan = "<?php echo "$perempuan"; ?>";
+    var laki = "<?php echo "$laki"; ?>"
+    const dataPie = {
+        labels: ["Laki-Laki", "Perempuan"],
+        datasets: [{
+            label: 'Jumlah',
+            data: [laki, perempuan],
+            backgroundColor: ["#3e95cd", "#8e5ea2"],
+            hoverOffset: 4
+        }]
+    };
 
-        // Config for Pie Chart
-        const configPie = {
-            type: 'pie',
-            data: dataPie,
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'left',
-                        labels: {
-                            boxWidth: 10,
-                            font: {
-                                style: 'italic'
-                            },
-                            color: '#aaa',
-                            usePointStyle: true,
-                        },
-                    },
-                },
-            }
-        };
-
-        // Create a new Chart instance and render the Pie Chart
-        const ctxPie = document.getElementById('chartDataWargaPie').getContext('2d');
-        const myPieChart = new Chart(ctxPie, configPie);
-
-        // Setup for Bar Chart
-        const dataBar = {
-            labels: ["Kepala Keluarga", "Jumlah Warga", "Jumlah Warga Sementara", "Jumlah Perempuan", "Jumlah Laki Laki"],
-            datasets: [{
-                label: 'Jumlah',
-                data: [125, 120, 10, 50, 60],
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#7FFF00"],
-                hoverOffset: 4
-            }]
-        };
-
-        // Config for Bar Chart
-        const configBar = {
-            type: 'bar',
-            data: dataBar,
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'left',
-                        labels: {
-                            boxWidth: 10,
-                            font: {
-                                style: 'italic'
-                            },
-                            color: '#aaa',
-                            usePointStyle: true,
-                        },
-                    },
-                },
-            }
-        };
-
-        // Create a new Chart instance and render the Bar Chart
-        const ctxBar = document.getElementById('chartDataWargaBar').getContext('2d');
-        const myBarChart = new Chart(ctxBar, configBar);
-    </script>
-
-    {{-- <script>
-        // Setup
-        const data = {
-            labels: ["Kepala Keluarga", "Istri", "Anak Laki-laki", "Anak Perempuan",
-                "Lainnya"
-            ],
-
-            datasets: [{
-                label: 'Jumlah',
-                data: [125, 120, 10, 50, 60],
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#7FFF00"],
-                hoverOffset: 4
-            }]
-        };
-
-        // Config
-        const config = {
-            type: 'pie',
-            data: data,
-            options: {
+    // Config for Pie Chart
+    const configPie = {
+        type: 'pie',
+        data: dataPie,
+        options: {
+            plugins: {
                 legend: {
                     position: 'left',
                     labels: {
                         boxWidth: 10,
-                        fontStyle: 'italic',
-                        fontColor: '#aaa',
+                        font: {
+                            style: 'italic'
+                        },
+                        color: '#aaa',
                         usePointStyle: true,
                     },
                 },
-            }
-        };
+            },
+        }
+    };
 
+    // Create a new Chart instance and render the Pie Chart
+    const ctxPie = document.getElementById('chartDataWargaJenisKelaminPie').getContext('2d');
+    const myPieChart = new Chart(ctxPie, configPie);
 
-        // Create a new Chart instance and render the chart
-        const ctx = document.getElementById('chartDataWargaPie').getContext('2d');
-        const myChart = new Chart(ctx, config);
-    </script>
+    // Setup for Chart Kelompok Usia
+    const dataKelompokUsia = {
+        labels: ["Balita", "Anak Anak", "Remaja Awal", "Remaja Akhir", "Dewasa", "Lansia", "Manula"],
+        datasets: [{
+            label: 'Jumlah',
+            data: <?php echo $chartUsia ?>,
+            backgroundColor: ["#FF9EAA", "#FFA27F", "#EE4E4E", "#E49BFF", "#2A629A", "#5C2FC2", "#003285"],
+            hoverOffset: 4
+        }]
+    };
 
-    <script>
-        // Setup
-        const data = {
-            labels: ["Kepala Keluarga", "Istri", "Anak Laki-laki", "Anak Perempuan",
-                "Lainnya"
-            ],
-
-            datasets: [{
-                label: 'Jumlah',
-                data: [125, 120, 10, 50, 60],
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#7FFF00"],
-                hoverOffset: 4
-            }]
-        };
-
-        // Config
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
+    // Config for Chart Kelompok Usia
+    const configKelompokUsia = {
+        type: 'bar',
+        data: dataKelompokUsia,
+        options: {
+            plugins: {
                 legend: {
                     position: 'left',
                     labels: {
                         boxWidth: 10,
-                        fontStyle: 'italic',
-                        fontColor: '#aaa',
+                        font: {
+                            style: 'italic'
+                        },
+                        color: '#aaa',
                         usePointStyle: true,
                     },
                 },
-            }
-        };
-
-
-        // Create a new Chart instance and render the chart
-        const ctx = document.getElementById('chartDataWargaBar').getContext('2d');
-        const myChart = new Chart(ctx, config);
-    </script> --}}
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
+            },
         }
+    };
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
+    // Create a new Chart instance and render the Pie Chart
+    const ctxKelompokUsia = document.getElementById('chartDataWargaKelompokUsia').getContext('2d');
+    const kelompokUsiaChart = new Chart(ctxKelompokUsia, configKelompokUsia);
+</script>
 
-        .nav-link {
-            margin-bottom: 10px;
-        }
-
-        /* Style untuk menyusun input search */
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-container input {
-            margin-right: 10px;
-        }
-
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 @endsection
-
-@include('component/navbar')

@@ -39,9 +39,9 @@
                 <form action="{{ route('register') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter your name" value="{{ old('name') }}" aria-describedby="name-error">
-                        @error('name')
+                        <label for="username" class="form-label">Name</label>
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Enter your username" value="{{ old('username') }}" aria-describedby="username-error">
+                        @error('username')
                         <div id="name-error" class="invalid-feedback">
                             {{ $message }}
                         </div>
